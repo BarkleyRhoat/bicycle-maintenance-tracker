@@ -1,0 +1,15 @@
+<%= render "shared/errors", object: bike %>
+
+<%= form_with model: bike do |form| %>
+  <div>
+    <%= form.label :name %>
+    <%= form.text_field :name %>
+  </div>
+
+  <div>
+    <%= form.label :brand %>
+    <%= form.text_field :brand %>
+  </div>
+
+  <%= form.submit %>
+<% end %>
