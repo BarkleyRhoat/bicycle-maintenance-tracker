@@ -26,11 +26,6 @@
     <header>
       <nav>
         <%= link_to "Bicycle Maintenance Tracker", root_path %>
-
-        <% if logged_in? %>
-          <span>Welcome, <%= current_user.name %></span>
-          <%= button_to "Log Out", logout_path, method: :delete %>
-        <% end %>
       </nav>
     </header>
 
@@ -43,5 +38,12 @@
     <% end %>
 
     <%= yield %>
+
+    <% if logged_in? %>
+      <footer>
+        <hr>
+        <%= button_to "Log Out", logout_path, method: :delete %>
+      </footer>
+    <% end %>
   </body>
 </html>
