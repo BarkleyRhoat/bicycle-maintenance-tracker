@@ -26,6 +26,14 @@
     <header>
       <nav>
         <%= link_to "Bicycle Maintenance Tracker", root_path %>
+
+        <% if logged_in? %>
+          <% if controller_name == "bikes" %>
+            | <%= link_to "Components", components_path %>
+          <% else %>
+            | <%= link_to "My Bikes", bikes_path %>
+          <% end %>
+        <% end %>
       </nav>
     </header>
 

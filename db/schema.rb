@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_08_31_191533) do
+ActiveRecord::Schema[8.1].define(version: 2026_08_31_224254) do
   create_table "bikes", force: :cascade do |t|
     t.string "brand"
     t.datetime "created_at", null: false
@@ -18,6 +18,14 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_31_191533) do
     t.datetime "updated_at", null: false
     t.integer "user_id", null: false
     t.index ["user_id"], name: "index_bikes_on_user_id"
+  end
+
+  create_table "components", force: :cascade do |t|
+    t.string "component_type"
+    t.datetime "created_at", null: false
+    t.integer "expected_lifespan_km"
+    t.string "name"
+    t.datetime "updated_at", null: false
   end
 
   create_table "users", force: :cascade do |t|
