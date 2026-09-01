@@ -1,7 +1,10 @@
 Rails.application.routes.draw do
   root "bikes#index"
 
-  resources :bikes
+  resources :bikes do
+    resources :bike_components, only: %i[new create destroy]
+  end
+
   resources :components
 
   get "signup", to: "users#new", as: :signup
