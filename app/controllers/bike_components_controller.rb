@@ -5,7 +5,7 @@ class BikeComponentsController < ApplicationController
 
   def new
     @bike_component = @bike.bike_components.build
-    @available_components = Component.order(:name)
+    @available_components = Component.all.order(:name)
   end
 
   def create
@@ -14,7 +14,7 @@ class BikeComponentsController < ApplicationController
     if @bike_component.save
       redirect_to bike_path(@bike), notice: "Component installed successfully."
     else
-      @available_components = Component.order(:name)
+      @available_components = Component.all.order(:name)
       render :new, status: :unprocessable_content
     end
   end
