@@ -7,7 +7,7 @@
         <strong><%= link_to component.name, component_path(component) %></strong>
         (<%= component.component_type %>) - Lifespan:
         <%= component.expected_lifespan_km ? "#{component.expected_lifespan_km} km" : "Indefinite" %>
-        | <%= link_to "Edit", edit_component_path(component) %> |
+        | <%= link_to "Edit", edit_component_path(component) %>
         <%= button_to "Delete", component_path(component), method: :delete %>
       </li>
     <% end %>

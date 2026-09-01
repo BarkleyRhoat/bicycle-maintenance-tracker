@@ -1,0 +1,25 @@
+<%= render "shared/errors", object: maintenance_log %>
+
+<%= form_with model: [@bike, maintenance_log] do |form| %>
+  <div>
+    <%= form.label :service_date %>
+    <%= form.date_field :service_date %>
+  </div>
+
+  <div>
+    <%= form.label :description %>
+    <%= form.text_field :description, placeholder: "e.g. Replaced chain, bled brakes" %>
+  </div>
+
+  <div>
+    <%= form.label :km_at_service, "KM at Service" %>
+    <%= form.number_field :km_at_service, min: 0 %>
+  </div>
+
+  <div>
+    <%= form.label :component_id, "Component (optional)" %>
+    <%= form.collection_select :component_id, installed_components, :id, :name, prompt: "Select a component", include_blank: "Whole bike" %>
+  </div>
+
+  <%= form.submit %>
+<% end %>

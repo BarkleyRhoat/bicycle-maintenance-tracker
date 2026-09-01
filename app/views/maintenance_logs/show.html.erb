@@ -1,0 +1,22 @@
+<h1>Maintenance Log</h1>
+
+<p><strong>Bike:</strong> <%= link_to @bike.name, bike_path(@bike) %></p>
+
+<p>
+  <strong>Service Date:</strong> <%= @maintenance_log.service_date.strftime("%B %d, %Y") %>
+</p>
+
+<p><strong>Description:</strong> <%= @maintenance_log.description %></p>
+<p><strong>KM at Service:</strong> <%= @maintenance_log.km_at_service %></p>
+
+<% if @maintenance_log.component %>
+  <p>
+    <strong>Component:</strong> <%= link_to @maintenance_log.component.name, component_path(@maintenance_log.component) %>
+  </p>
+<% end %>
+
+<p>
+  <%= link_to "Edit Log", edit_bike_maintenance_log_path(@bike, @maintenance_log) %>
+  <%= button_to "Delete Log", bike_maintenance_log_path(@bike, @maintenance_log), method: :delete %>
+  <%= link_to "Back to Maintenance Logs", bike_maintenance_logs_path(@bike) %>
+</p>
