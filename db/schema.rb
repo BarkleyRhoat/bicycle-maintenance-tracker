@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_09_01_143219) do
+ActiveRecord::Schema[8.1].define(version: 2026_09_01_193531) do
   create_table "bike_components", force: :cascade do |t|
     t.integer "bike_id", null: false
     t.integer "component_id", null: false
@@ -40,6 +40,18 @@ ActiveRecord::Schema[8.1].define(version: 2026_09_01_143219) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "maintenance_logs", force: :cascade do |t|
+    t.integer "bike_id", null: false
+    t.integer "component_id"
+    t.datetime "created_at", null: false
+    t.string "description", null: false
+    t.integer "km_at_service", default: 0, null: false
+    t.date "service_date", null: false
+    t.datetime "updated_at", null: false
+    t.index ["bike_id"], name: "index_maintenance_logs_on_bike_id"
+    t.index ["component_id"], name: "index_maintenance_logs_on_component_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.string "email"
@@ -51,4 +63,6 @@ ActiveRecord::Schema[8.1].define(version: 2026_09_01_143219) do
   add_foreign_key "bike_components", "bikes"
   add_foreign_key "bike_components", "components"
   add_foreign_key "bikes", "users"
+  add_foreign_key "maintenance_logs", "bikes"
+  add_foreign_key "maintenance_logs", "components"
 end

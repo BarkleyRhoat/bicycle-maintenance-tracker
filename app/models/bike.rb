@@ -3,6 +3,7 @@ class Bike < ApplicationRecord
 
   has_many :bike_components, dependent: :destroy
   has_many :components, through: :bike_components
+  has_many :maintenance_logs, dependent: :destroy
 
   validates :name, presence: true
   validates :brand, presence: true
