@@ -1,6 +1,18 @@
 require "rails_helper"
 
 RSpec.describe Component, type: :model do
+  describe "associations" do
+    it "has many bikes through bike_components" do
+      component = create(:component)
+      bike1 = create(:bike, name: "Road Bike")
+      bike2 = create(:bike, name: "Gravel Bike")
+      create(:bike_component, bike: bike1, component: component)
+      create(:bike_component, bike: bike2, component: component)
+
+      expect(component.bikes).to include(bike1, bike2)
+    end
+  end
+
   describe "validations" do
     it "is valid with a name, component_type, and positive expected_lifespan_km" do
       component = build(:component)

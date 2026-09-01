@@ -7,6 +7,16 @@ RSpec.describe Bike, type: :model do
       bike = create(:bike, user: user)
       expect(bike.user).to eq(user)
     end
+
+    it "has many components through bike_components" do
+      bike = create(:bike)
+      component1 = create(:component, name: "Chain")
+      component2 = create(:component, name: "Tires")
+      create(:bike_component, bike: bike, component: component1)
+      create(:bike_component, bike: bike, component: component2)
+
+      expect(bike.components).to include(component1, component2)
+    end
   end
 
   describe "validations" do
