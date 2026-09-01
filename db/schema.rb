@@ -10,7 +10,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_08_31_224254) do
+ActiveRecord::Schema[8.1].define(version: 2026_09_01_143219) do
+  create_table "bike_components", force: :cascade do |t|
+    t.integer "bike_id", null: false
+    t.integer "component_id", null: false
+    t.datetime "created_at", null: false
+    t.integer "current_km", default: 0, null: false
+    t.date "installed_on", null: false
+    t.datetime "updated_at", null: false
+    t.index ["bike_id", "component_id"], name: "index_bike_components_on_bike_id_and_component_id", unique: true
+    t.index ["bike_id"], name: "index_bike_components_on_bike_id"
+    t.index ["component_id"], name: "index_bike_components_on_component_id"
+  end
+
   create_table "bikes", force: :cascade do |t|
     t.string "brand"
     t.datetime "created_at", null: false
@@ -36,5 +48,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_31_224254) do
     t.datetime "updated_at", null: false
   end
 
+  add_foreign_key "bike_components", "bikes"
+  add_foreign_key "bike_components", "components"
   add_foreign_key "bikes", "users"
 end
