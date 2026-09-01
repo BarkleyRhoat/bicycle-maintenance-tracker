@@ -1,0 +1,13 @@
+<h1><%= @component.name %></h1>
+
+<p><strong>Type:</strong> <%= @component.component_type %></p>
+
+<p>
+  <strong>Expected Lifespan:</strong> <%= @component.expected_lifespan_km ? "#{@component.expected_lifespan_km} km" : "Indefinite" %>
+</p>
+
+<p>
+  <%= link_to "Edit Component", edit_component_path(@component) %>
+  <%= button_to "Delete Component", component_path(@component), method: :delete %>
+  <%= link_to "Back to Components", components_path %>
+</p>

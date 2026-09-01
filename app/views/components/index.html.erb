@@ -1,0 +1,19 @@
+<h1>Components</h1>
+
+<% if @components.any? %>
+  <ul class="components-list">
+    <% @components.each do |component| %>
+      <li>
+        <strong><%= link_to component.name, component_path(component) %></strong>
+        (<%= component.component_type %>) - Lifespan:
+        <%= component.expected_lifespan_km ? "#{component.expected_lifespan_km} km" : "Indefinite" %>
+        | <%= link_to "Edit", edit_component_path(component) %> |
+        <%= button_to "Delete", component_path(component), method: :delete %>
+      </li>
+    <% end %>
+  </ul>
+<% else %>
+  <p>No components have been added yet.</p>
+<% end %>
+
+<p><%= link_to "Add a New Component", new_component_path %></p>
