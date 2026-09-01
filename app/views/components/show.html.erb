@@ -6,8 +6,25 @@
   <strong>Expected Lifespan:</strong> <%= @component.expected_lifespan_km ? "#{@component.expected_lifespan_km} km" : "Indefinite" %>
 </p>
 
+<h2>Installed On Bikes</h2>
+
+<% if @component.bike_components.any? %>
+  <ul class="component-bikes-list">
+    <% @component.bike_components.each do |bike_component| %>
+      <li>
+        <strong><%= link_to bike_component.bike.name, bike_path(bike_component.bike) %></strong>
+        (<%= bike_component.bike.brand %>) | Installed on:
+        <%= bike_component.installed_on.strftime("%B %d, %Y") %> | Current KM:
+        <%= bike_component.current_km %>
+      </li>
+    <% end %>
+  </ul>
+<% else %>
+  <p>Not installed on any bikes.</p>
+<% end %>
+
 <p>
-  <%= link_to "Edit Component", edit_component_path(@component) %>
+  <%= link_to "Edit Component", edit_component_path(@component) %> |
   <%= button_to "Delete Component", component_path(@component), method: :delete %>
-  <%= link_to "Back to Components", components_path %>
+  | <%= link_to "Back to Components", components_path %>
 </p>

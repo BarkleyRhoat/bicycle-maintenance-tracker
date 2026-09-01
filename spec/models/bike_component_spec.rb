@@ -25,6 +25,17 @@ RSpec.describe BikeComponent, type: :model do
       expect(bike_component.errors[:installed_on]).to include("can't be blank")
     end
 
+    it "is invalid with installed_on in the future" do
+      bike_component = build(:bike_component, installed_on: Date.current + 1.day)
+      expect(bike_component).not_to be_valid
+      expect(bike_component.errors[:installed_on]).to include("cannot be in the future")
+    end
+
+    it "is valid with installed_on of today" do
+      bike_component = build(:bike_component, installed_on: Date.current)
+      expect(bike_component).to be_valid
+    end
+
     it "is invalid without current_km" do
       bike_component = build(:bike_component, current_km: nil)
       expect(bike_component).not_to be_valid

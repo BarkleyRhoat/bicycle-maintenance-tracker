@@ -3,8 +3,27 @@
 <p><strong>Brand:</strong> <%= @bike.brand %></p>
 <p><strong>Added on:</strong> <%= @bike.created_at.strftime("%B %d, %Y") %></p>
 
+<h2>Installed Components</h2>
+
+<% if @bike.bike_components.any? %>
+  <ul class="bike-components-list">
+    <% @bike.bike_components.each do |bike_component| %>
+      <li>
+        <strong><%= link_to bike_component.component.name, component_path(bike_component.component) %></strong>
+        (<%= bike_component.component.component_type %>) | Installed on:
+        <%= bike_component.installed_on.strftime("%B %d, %Y") %> | Current KM:
+        <%= bike_component.current_km %> |
+        <%= button_to "Remove", bike_bike_component_path(@bike, bike_component), method: :delete %>
+      </li>
+    <% end %>
+  </ul>
+<% else %>
+  <p>No components installed yet.</p>
+<% end %>
+
 <p>
-  <%= link_to "Edit Bike", edit_bike_path(@bike) %>
-  <%= button_to "Delete Bike", bike_path(@bike), method: :delete %>
+  <%= link_to "Install a Component", new_bike_bike_component_path(@bike) %> |
+  <%= link_to "Edit Bike", edit_bike_path(@bike) %> |
+  <%= button_to "Delete Bike", bike_path(@bike), method: :delete %> |
   <%= link_to "Back to My Bikes", bikes_path %>
 </p>

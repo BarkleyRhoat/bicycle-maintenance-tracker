@@ -1,0 +1,24 @@
+<h1>Install Component on <%= @bike.name %></h1>
+
+<%= render "shared/errors", object: @bike_component %>
+
+<%= form_with model: [@bike, @bike_component] do |form| %>
+  <div>
+    <%= form.label :component_id, "Component" %>
+    <%= form.collection_select :component_id, @available_components, :id, :name, prompt: "Select a component" %>
+  </div>
+
+  <div>
+    <%= form.label :installed_on %>
+    <%= form.date_field :installed_on %>
+  </div>
+
+  <div>
+    <%= form.label :current_km, "Current KM" %>
+    <%= form.number_field :current_km, min: 0 %>
+  </div>
+
+  <%= form.submit "Install Component" %>
+<% end %>
+
+<p><%= link_to "Back to Bike", bike_path(@bike) %></p>
