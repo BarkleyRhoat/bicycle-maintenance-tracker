@@ -11,7 +11,7 @@ class MaintenanceLog < ApplicationRecord
                             numericality: { only_integer: true, greater_than_or_equal_to: 0 }
   validate :component_must_be_installed_on_bike, if: -> { component_id.present? }
 
-  private
+private
 
   def service_date_cannot_be_in_the_future
     return if service_date.blank?

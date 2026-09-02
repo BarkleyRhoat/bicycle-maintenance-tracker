@@ -39,7 +39,7 @@ class ComponentsController < ApplicationController
     redirect_to components_path, notice: "Component deleted successfully."
   end
 
-  private
+private
 
   def set_component
     @component = current_user.components.find(params[:id])

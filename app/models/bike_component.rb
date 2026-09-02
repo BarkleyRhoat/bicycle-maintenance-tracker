@@ -9,7 +9,7 @@ class BikeComponent < ApplicationRecord
   validates :component_id, uniqueness: { scope: :bike_id, message: "is already installed on this bike" }
   validate :component_must_belong_to_bike_owner
 
-  private
+private
 
   def installed_on_cannot_be_in_the_future
     return if installed_on.blank?
