@@ -20,7 +20,7 @@
     <% end %>
   </ul>
 <% else %>
-  <p>Not installed on any bikes.</p>
+<p class="empty-state">Not installed on any bikes.</p>
 <% end %>
 
 <h2>Maintenance History</h2>
@@ -38,10 +38,10 @@
     <% end %>
   </ul>
 <% else %>
-  <p>No maintenance logs for this component yet.</p>
+<p class="empty-state">No maintenance logs for this component yet.</p>
 <% end %>
 
-<p>
+<p class="page-actions">
   <%= link_to "Edit Component", edit_component_path(@component) %>
   <%= button_to "Delete Component", component_path(@component), method: :delete %>
   <%= link_to "Back to Components", components_path %>

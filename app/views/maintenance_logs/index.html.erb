@@ -16,10 +16,10 @@
     <% end %>
   </ul>
 <% else %>
-  <p>No maintenance logs for bike yet.</p>
+<p class="empty-state">No maintenance logs for bike yet.</p>
 <% end %>
 
-<p>
-  <%= link_to "Add a Maintenance Log", new_bike_maintenance_log_path(@bike) %> |
+<p class="page-actions">
+  <%= link_to "Add a Maintenance Log", new_bike_maintenance_log_path(@bike) %>
   <%= link_to "Back to Bike", bike_path(@bike) %>
 </p>
