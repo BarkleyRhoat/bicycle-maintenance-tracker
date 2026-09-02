@@ -3,19 +3,19 @@ class ComponentsController < ApplicationController
   before_action :set_component, only: %i[edit update destroy]
 
   def index
-    @components = Component.all
+    @components = current_user.components
   end
 
   def show
-    @component = Component.includes(maintenance_logs: :bike).find(params[:id])
+    @component = current_user.components.includes(maintenance_logs: :bike).find(params[:id])
   end
 
   def new
-    @component = Component.new
+    @component = current_user.components.build
   end
 
   def create
-    @component = Component.new(component_params)
+    @component = current_user.components.build(component_params)
 
     if @component.save
       redirect_to component_path(@component), notice: "Component created successfully."
@@ -42,7 +42,7 @@ class ComponentsController < ApplicationController
   private
 
   def set_component
-    @component = Component.find(params[:id])
+    @component = current_user.components.find(params[:id])
   end
 
   def component_params

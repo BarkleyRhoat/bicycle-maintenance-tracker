@@ -64,7 +64,7 @@ RSpec.describe MaintenanceLog, type: :model do
 
     it "is valid with a component installed on the bike" do
       bike = create(:bike)
-      component = create(:component)
+      component = create(:component, user: bike.user)
       create(:bike_component, bike: bike, component: component)
       maintenance_log = build(:maintenance_log, bike: bike, component: component)
 
@@ -73,7 +73,7 @@ RSpec.describe MaintenanceLog, type: :model do
 
     it "is invalid with a component not installed on the bike" do
       bike = create(:bike)
-      component = create(:component)
+      component = create(:component, user: bike.user)
       maintenance_log = build(:maintenance_log, bike: bike, component: component)
 
       expect(maintenance_log).not_to be_valid

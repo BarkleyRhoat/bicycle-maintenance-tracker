@@ -56,7 +56,7 @@ RSpec.describe BikeComponent, type: :model do
 
     it "prevents duplicate component installation on the same bike" do
       bike = create(:bike)
-      component = create(:component)
+      component = create(:component, user: bike.user)
       create(:bike_component, bike: bike, component: component)
 
       duplicate = build(:bike_component, bike: bike, component: component)
