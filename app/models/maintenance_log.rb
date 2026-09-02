@@ -7,7 +7,8 @@ class MaintenanceLog < ApplicationRecord
   validates :service_date, presence: true
   validate :service_date_cannot_be_in_the_future
   validates :description, presence: true
-  validates :km_at_service, presence: true, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
+  validates :km_at_service, presence: true,
+                            numericality: { only_integer: true, greater_than_or_equal_to: 0 }
   validate :component_must_be_installed_on_bike, if: -> { component_id.present? }
 
   private
