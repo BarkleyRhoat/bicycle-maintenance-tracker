@@ -1,12 +1,14 @@
 class ComponentsController < ApplicationController
   before_action :require_login
-  before_action :set_component, only: %i[show edit update destroy]
+  before_action :set_component, only: %i[edit update destroy]
 
   def index
     @components = Component.all
   end
 
-  def show; end
+  def show
+    @component = Component.includes(maintenance_logs: :bike).find(params[:id])
+  end
 
   def new
     @component = Component.new

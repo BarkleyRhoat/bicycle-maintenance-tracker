@@ -23,6 +23,24 @@
   <p>Not installed on any bikes.</p>
 <% end %>
 
+<h2>Maintenance History</h2>
+
+<% if @component.maintenance_logs.any? %>
+  <ul class="component-maintenance-logs-list">
+    <% @component.maintenance_logs.recent.each do |log| %>
+      <li>
+        <strong><%= link_to log.service_date.strftime("%B %d, %Y"), bike_maintenance_log_path(log.bike, log) %></strong>
+        | <%= log.description %> | KM at service: <%= log.km_at_service %>
+        <% if log.bike %>
+          | Bike: <%= link_to log.bike.name, bike_path(log.bike) %>
+        <% end %>
+      </li>
+    <% end %>
+  </ul>
+<% else %>
+  <p>No maintenance logs for this component yet.</p>
+<% end %>
+
 <p>
   <%= link_to "Edit Component", edit_component_path(@component) %>
   <%= button_to "Delete Component", component_path(@component), method: :delete %>
