@@ -3,7 +3,7 @@ require "rails_helper"
 RSpec.describe "MaintenanceLogs", type: :request do
   let(:user) { create(:user) }
   let(:bike) { create(:bike, user: user) }
-  let(:component) { create(:component) }
+  let(:component) { create(:component, user: user) }
 
   before do
     create(:bike_component, bike: bike, component: component)
@@ -29,7 +29,7 @@ RSpec.describe "MaintenanceLogs", type: :request do
     end
 
     it "renders new with errors when component is not installed on the bike" do
-      other_component = create(:component)
+      other_component = create(:component, user: user)
 
       post bike_maintenance_logs_path(bike), params: {
         maintenance_log: {

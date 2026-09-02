@@ -7,6 +7,7 @@ class BikeComponent < ApplicationRecord
   validates :current_km, presence: true,
                          numericality: { only_integer: true, greater_than_or_equal_to: 0 }
   validates :component_id, uniqueness: { scope: :bike_id, message: "is already installed on this bike" }
+  validate :component_must_belong_to_bike_owner
 
   private
 
@@ -15,5 +16,12 @@ class BikeComponent < ApplicationRecord
     return if installed_on <= Date.current
 
     errors.add(:installed_on, "cannot be in the future")
+  end
+
+  def component_must_belong_to_bike_owner
+    return if component.blank? || bike.blank?
+    return if component.user_id == bike.user_id
+
+    errors.add(:component, "must belong to the bike owner")
   end
 end
