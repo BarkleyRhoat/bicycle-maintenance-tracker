@@ -43,7 +43,7 @@ class MaintenanceLogsController < ApplicationController
     redirect_to bike_maintenance_logs_path(@bike), notice: "Log deleted successfully."
   end
 
-  private
+private
 
   def set_bike
     @bike = current_user.bikes.find(params[:bike_id])

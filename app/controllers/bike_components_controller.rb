@@ -25,7 +25,7 @@ class BikeComponentsController < ApplicationController
     redirect_to bike_path(@bike), notice: "Component removed successfully."
   end
 
-  private
+private
 
   def set_bike
     @bike = current_user.bikes.find(params[:bike_id])

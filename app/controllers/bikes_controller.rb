@@ -37,7 +37,7 @@ class BikesController < ApplicationController
     redirect_to bikes_path, notice: "Bike deleted successfully."
   end
 
-  private
+private
 
   def set_bike
     @bike = current_user.bikes.find(params[:id])
