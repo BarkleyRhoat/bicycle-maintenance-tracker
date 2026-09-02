@@ -72,21 +72,11 @@ User story: As a logged-in user, I want to view maintenance records by bike or c
 - Each log shows the bike, component, service date, and description.
 - I see a helpful message when no maintenance logs match my selection.
 
-## Feature 7 - Overdue Components
-
-User story: As a logged-in user, I want to see which components may need service so that I can keep my bike in safe riding condition.
-
-### Feature 7 Acceptance Criteria
-
-- I can view a list of components that are overdue for service.
-- Each overdue item shows the component name, type, current mileage, and expected lifespan.
-- I see a helpful message when no components are overdue.
-
-## Feature 8 - Validation and Error Handling
+## Feature 7 - Validation and Error Handling
 
 User story: As a user, I want clear feedback when I make a mistake so that I can fix it and continue.
 
-### Feature 8 Acceptance Criteria
+### Feature 7 Acceptance Criteria
 
 - Invalid forms are not saved.
 - I see a list of error messages explaining what went wrong.
