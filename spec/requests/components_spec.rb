@@ -63,6 +63,7 @@ RSpec.describe "Components", type: :request do
       it "displays associated maintenance logs" do
         component = create(:component)
         bike = create(:bike, user: user)
+        create(:bike_component, bike: bike, component: component)
         create(
           :maintenance_log,
           bike: bike,

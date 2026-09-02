@@ -61,6 +61,24 @@ RSpec.describe MaintenanceLog, type: :model do
       expect(maintenance_log).not_to be_valid
       expect(maintenance_log.errors[:km_at_service]).to include("must be an integer")
     end
+
+    it "is valid with a component installed on the bike" do
+      bike = create(:bike)
+      component = create(:component)
+      create(:bike_component, bike: bike, component: component)
+      maintenance_log = build(:maintenance_log, bike: bike, component: component)
+
+      expect(maintenance_log).to be_valid
+    end
+
+    it "is invalid with a component not installed on the bike" do
+      bike = create(:bike)
+      component = create(:component)
+      maintenance_log = build(:maintenance_log, bike: bike, component: component)
+
+      expect(maintenance_log).not_to be_valid
+      expect(maintenance_log.errors[:component]).to include("must be installed on this bike")
+    end
   end
 
   describe "scopes" do
