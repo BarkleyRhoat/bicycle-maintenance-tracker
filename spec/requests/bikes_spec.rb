@@ -65,10 +65,13 @@ RSpec.describe "Bikes", type: :request do
         expect(response.body).to include("Trek")
       end
 
-      it "returns 404 not found when attempting to view another user's bike" do
+      it "redirects to root with an alert when attempting to view another user's bike" do
         other_bike = create(:bike, user: other_user)
         get bike_path(other_bike)
-        expect(response).to have_http_status(:not_found)
+
+        expect(response).to redirect_to(root_path)
+        follow_redirect!
+        expect(response.body).to include("Record not found.")
       end
     end
 

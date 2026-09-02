@@ -100,7 +100,7 @@ RSpec.describe "BikeComponents", type: :request do
     end
 
     describe "authorization" do
-      it "returns 404 when installing a component on another user's bike" do
+      it "redirects to root with an alert when installing a component on another user's bike" do
         other_bike = create(:bike, user: other_user)
 
         post bike_bike_components_path(other_bike), params: {
@@ -111,7 +111,9 @@ RSpec.describe "BikeComponents", type: :request do
           }
         }
 
-        expect(response).to have_http_status(:not_found)
+        expect(response).to redirect_to(root_path)
+        follow_redirect!
+        expect(response.body).to include("Record not found.")
       end
     end
 

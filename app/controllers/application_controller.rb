@@ -4,6 +4,8 @@ class ApplicationController < ActionController::Base
 
   helper_method :current_user, :logged_in?
 
+  rescue_from ActiveRecord::RecordNotFound, with: :record_not_found
+
   private
 
   def current_user
@@ -18,5 +20,9 @@ class ApplicationController < ActionController::Base
     return if logged_in?
 
     redirect_to login_path, alert: "You must be logged in to access this page."
+  end
+
+  def record_not_found
+    redirect_to root_path, alert: "Record not found."
   end
 end
