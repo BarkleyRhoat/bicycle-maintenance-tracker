@@ -23,35 +23,46 @@
   </head>
 
   <body>
-    <header>
-      <nav>
-        <%= link_to "Home", root_path %>
-
-        <% if logged_in? %>
-          <% if controller_name == "bikes" %>
-            | <%= link_to "Components", components_path %>
-          <% else %>
-            | <%= link_to "My Bikes", bikes_path %>
-          <% end %>
+    <header class="site-header">
+      <div class="container">
+        <%= link_to root_path, class: "site-title" do %>
+          <span aria-hidden="true">🚲</span>
+          Bicycle Maintenance Tracker
         <% end %>
-      </nav>
+
+        <nav class="site-nav">
+          <% if logged_in? %>
+            <%= link_to "My Bikes", bikes_path, class: ("active" if controller_name == "bikes") %>
+            <%= link_to "Components", components_path, class: ("active" if controller_name == "components") %>
+            <%= button_to "Log Out", logout_path, method: :delete, class: "nav-logout", form_class: "nav-logout-form" %>
+          <% else %>
+            <%= link_to "Log In", login_path %>
+            <%= link_to "Sign Up", signup_path, class: "nav-signup" %>
+          <% end %>
+        </nav>
+      </div>
     </header>
 
     <% if flash[:notice] %>
-      <div class="notice"><%= flash[:notice] %></div>
+      <div class="container">
+        <div class="notice"><%= flash[:notice] %></div>
+      </div>
     <% end %>
 
     <% if flash[:alert] %>
-      <div class="alert"><%= flash[:alert] %></div>
+      <div class="container">
+        <div class="alert"><%= flash[:alert] %></div>
+      </div>
     <% end %>
 
-    <%= yield %>
+    <main class="site-main container">
+      <%= yield %>
+    </main>
 
-    <% if logged_in? %>
-      <footer>
-        <hr>
-        <%= button_to "Log Out", logout_path, method: :delete %>
-      </footer>
-    <% end %>
+    <footer class="site-footer">
+      <div class="container">
+        Bicycle Maintenance Tracker
+      </div>
+    </footer>
   </body>
 </html>

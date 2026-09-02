@@ -15,7 +15,7 @@
   </p>
 <% end %>
 
-<p>
+<p class="page-actions">
   <%= link_to "Edit Log", edit_bike_maintenance_log_path(@bike, @maintenance_log) %>
   <%= button_to "Delete Log", bike_maintenance_log_path(@bike, @maintenance_log), method: :delete %>
   <%= link_to "Back to Maintenance Logs", bike_maintenance_logs_path(@bike) %>

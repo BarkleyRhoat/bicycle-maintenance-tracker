@@ -14,7 +14,7 @@
     <% end %>
   </ul>
 <% else %>
-  <p>You have not added any bikes yet.</p>
+<p class="empty-state">You have not added any bikes yet.</p>
 <% end %>
 
-<%= link_to "Add a New Bike", new_bike_path %>
+<p class="page-actions"><%= link_to "Add a New Bike", new_bike_path, class: "button" %></p>

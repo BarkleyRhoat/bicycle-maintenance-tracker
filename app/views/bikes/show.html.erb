@@ -18,7 +18,7 @@
     <% end %>
   </ul>
 <% else %>
-  <p>No components installed yet.</p>
+<p class="empty-state">No components installed yet.</p>
 <% end %>
 
 <h2>Maintenance History</h2>
@@ -36,12 +36,12 @@
     <%= link_to "View All Maintenance Logs", bike_maintenance_logs_path(@bike) %>
   </p>
 <% else %>
-  <p>No maintenance logs for this bike yet.</p>
+<p class="empty-state">No maintenance logs for this bike yet.</p>
 <% end %>
 
-<p>
+<p class="page-actions">
   <%= link_to "Add a Maintenance Log", new_bike_maintenance_log_path(@bike) %>
-  | <%= link_to "Install a Component", new_bike_bike_component_path(@bike) %> |
+  <%= link_to "Install a Component", new_bike_bike_component_path(@bike) %>
   <%= link_to "Edit Bike", edit_bike_path(@bike) %>
   <%= button_to "Delete Bike", bike_path(@bike), method: :delete %>
   <%= link_to "Back to My Bikes", bikes_path %>
