@@ -1,0 +1,7 @@
+<h1>Edit Maintenance Log</h1>
+
+<%= render "form", bike: @bike, maintenance_log: @maintenance_log, installed_components: @installed_components %>
+
+<p>
+  <%= link_to "Back to Maintenance Logs", bike_maintenance_logs_path(@bike) %>
+</p>

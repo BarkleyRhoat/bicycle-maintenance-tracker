@@ -1,0 +1,25 @@
+<h1>Maintenance History for <%= @bike.name %></h1>
+
+<% if @maintenance_logs.any? %>
+  <ul class="maintenance-logs-list">
+    <% @maintenance_logs.each do |log| %>
+      <li>
+        <strong><%= link_to log.service_date.strftime("%B %d, %Y"), bike_maintenance_log_path(@bike, log) %></strong>
+        | <%= log.description %> | KM at service: <%= log.km_at_service %>
+        <% if log.component %>
+          | Component:
+          <%= link_to log.component.name, component_path(log.component) %>
+        <% end %>
+        | <%= link_to "Edit", edit_bike_maintenance_log_path(@bike, log) %>
+        <%= button_to "Delete", bike_maintenance_log_path(@bike, log), method: :delete %>
+      </li>
+    <% end %>
+  </ul>
+<% else %>
+  <p>No maintenance logs for bike yet.</p>
+<% end %>
+
+<p>
+  <%= link_to "Add a Maintenance Log", new_bike_maintenance_log_path(@bike) %> |
+  <%= link_to "Back to Bike", bike_path(@bike) %>
+</p>

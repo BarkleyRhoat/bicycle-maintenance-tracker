@@ -3,6 +3,7 @@ Rails.application.routes.draw do
 
   resources :bikes do
     resources :bike_components, only: %i[new create destroy]
+    resources :maintenance_logs, only: %i[index new create show edit update destroy]
   end
 
   resources :components

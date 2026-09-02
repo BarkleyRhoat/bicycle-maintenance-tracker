@@ -12,7 +12,7 @@
         <strong><%= link_to bike_component.component.name, component_path(bike_component.component) %></strong>
         (<%= bike_component.component.component_type %>) | Installed on:
         <%= bike_component.installed_on.strftime("%B %d, %Y") %> | Current KM:
-        <%= bike_component.current_km %> |
+        <%= bike_component.current_km %>
         <%= button_to "Remove", bike_bike_component_path(@bike, bike_component), method: :delete %>
       </li>
     <% end %>
@@ -21,9 +21,28 @@
   <p>No components installed yet.</p>
 <% end %>
 
+<h2>Maintenance History</h2>
+
+<% if @bike.maintenance_logs.any? %>
+  <ul class="bike-maintenance-logs-list">
+    <% @bike.maintenance_logs.recent.limit(5).each do |log| %>
+      <li>
+        <strong><%= link_to log.service_date.strftime("%B %d, %Y"), bike_maintenance_log_path(@bike, log) %></strong>
+        | <%= log.description %> | KM at service: <%= log.km_at_service %>
+      </li>
+    <% end %>
+  </ul>
+  <p>
+    <%= link_to "View All Maintenance Logs", bike_maintenance_logs_path(@bike) %>
+  </p>
+<% else %>
+  <p>No maintenance logs for this bike yet.</p>
+<% end %>
+
 <p>
-  <%= link_to "Install a Component", new_bike_bike_component_path(@bike) %> |
-  <%= link_to "Edit Bike", edit_bike_path(@bike) %> |
-  <%= button_to "Delete Bike", bike_path(@bike), method: :delete %> |
+  <%= link_to "Add a Maintenance Log", new_bike_maintenance_log_path(@bike) %>
+  | <%= link_to "Install a Component", new_bike_bike_component_path(@bike) %> |
+  <%= link_to "Edit Bike", edit_bike_path(@bike) %>
+  <%= button_to "Delete Bike", bike_path(@bike), method: :delete %>
   <%= link_to "Back to My Bikes", bikes_path %>
 </p>

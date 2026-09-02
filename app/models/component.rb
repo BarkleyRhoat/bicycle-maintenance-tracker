@@ -1,6 +1,7 @@
 class Component < ApplicationRecord
   has_many :bike_components, dependent: :destroy
   has_many :bikes, through: :bike_components
+  has_many :maintenance_logs
 
   validates :name, presence: true
   validates :component_type, presence: true
