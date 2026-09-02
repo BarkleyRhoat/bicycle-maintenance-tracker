@@ -59,6 +59,35 @@ RSpec.describe "Components", type: :request do
         expect(response.body).to include("Tires")
         expect(response.body).to include("5000 km")
       end
+
+      it "displays associated maintenance logs" do
+        component = create(:component)
+        bike = create(:bike, user: user)
+        create(
+          :maintenance_log,
+          bike: bike,
+          component: component,
+          service_date: Date.new(2025, 8, 15),
+          description: "Cleaned and lubed",
+          km_at_service: 800
+        )
+
+        get component_path(component)
+
+        expect(response).to have_http_status(:ok)
+        expect(response.body).to include("Maintenance History")
+        expect(response.body).to include("August 15, 2025")
+        expect(response.body).to include("Cleaned and lubed")
+        expect(response.body).to include("800")
+        expect(response.body).to include(bike.name)
+      end
+
+      it "displays an empty state when no maintenance logs exist" do
+        component = create(:component)
+        get component_path(component)
+
+        expect(response.body).to include("No maintenance logs for this component yet.")
+      end
     end
 
     describe "POST /components" do
