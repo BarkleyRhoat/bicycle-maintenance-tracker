@@ -1,4 +1,6 @@
 class Component < ApplicationRecord
+  belongs_to :user
+
   has_many :bike_components, dependent: :destroy
   has_many :bikes, through: :bike_components
   has_many :maintenance_logs

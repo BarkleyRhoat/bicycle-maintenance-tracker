@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_09_01_193531) do
+ActiveRecord::Schema[8.1].define(version: 2026_09_02_184035) do
   create_table "bike_components", force: :cascade do |t|
     t.integer "bike_id", null: false
     t.integer "component_id", null: false
@@ -38,6 +38,8 @@ ActiveRecord::Schema[8.1].define(version: 2026_09_01_193531) do
     t.integer "expected_lifespan_km"
     t.string "name"
     t.datetime "updated_at", null: false
+    t.integer "user_id", null: false
+    t.index ["user_id"], name: "index_components_on_user_id"
   end
 
   create_table "maintenance_logs", force: :cascade do |t|
@@ -63,6 +65,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_09_01_193531) do
   add_foreign_key "bike_components", "bikes"
   add_foreign_key "bike_components", "components"
   add_foreign_key "bikes", "users"
+  add_foreign_key "components", "users"
   add_foreign_key "maintenance_logs", "bikes"
   add_foreign_key "maintenance_logs", "components"
 end

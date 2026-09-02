@@ -10,8 +10,8 @@ RSpec.describe Bike, type: :model do
 
     it "has many components through bike_components" do
       bike = create(:bike)
-      component1 = create(:component, name: "Chain")
-      component2 = create(:component, name: "Tires")
+      component1 = create(:component, name: "Chain", user: bike.user)
+      component2 = create(:component, name: "Tires", user: bike.user)
       create(:bike_component, bike: bike, component: component1)
       create(:bike_component, bike: bike, component: component2)
 

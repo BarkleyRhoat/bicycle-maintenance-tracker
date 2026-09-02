@@ -4,7 +4,7 @@ RSpec.describe "BikeComponents", type: :request do
   let(:user) { create(:user) }
   let(:other_user) { create(:user) }
   let(:bike) { create(:bike, user: user) }
-  let(:component) { create(:component) }
+  let(:component) { create(:component, user: user) }
 
   def bike
     @bike ||= create(:bike, user: user)
@@ -114,6 +114,23 @@ RSpec.describe "BikeComponents", type: :request do
         expect(response).to redirect_to(root_path)
         follow_redirect!
         expect(response.body).to include("Record not found.")
+      end
+
+      it "does not allow installing another user's component on the current user's bike" do
+        other_component = create(:component, user: other_user)
+
+        expect do
+          post bike_bike_components_path(bike), params: {
+            bike_component: {
+              component_id: other_component.id,
+              installed_on: Date.current,
+              current_km: 10
+            }
+          }
+        end.not_to change(BikeComponent, :count)
+
+        expect(response).to have_http_status(:unprocessable_content)
+        expect(response.body).to include("must belong to the bike owner")
       end
     end
 
