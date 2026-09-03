@@ -6,7 +6,7 @@ class BikeComponent < ApplicationRecord
   validate :installed_on_cannot_be_in_the_future
   validates :current_km, presence: true,
                          numericality: { only_integer: true, greater_than_or_equal_to: 0 }
-  validates :component_id, uniqueness: { scope: :bike_id, message: "is already installed on this bike" }
+  validates :component_id, uniqueness: { message: "is already installed on a bike" }
   validate :component_must_belong_to_bike_owner
 
 private

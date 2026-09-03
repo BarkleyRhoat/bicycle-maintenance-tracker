@@ -54,14 +54,15 @@ RSpec.describe BikeComponent, type: :model do
       expect(bike_component.errors[:current_km]).to include("must be an integer")
     end
 
-    it "prevents duplicate component installation on the same bike" do
-      bike = create(:bike)
-      component = create(:component, user: bike.user)
-      create(:bike_component, bike: bike, component: component)
-
-      duplicate = build(:bike_component, bike: bike, component: component)
+    it "is invalid when the component is already installed on another bike" do
+      bike1 = create(:bike)
+      bike2 = create(:bike, user: bike1.user)
+      component = create(:component, user: bike1.user)
+      create(:bike_component, bike: bike1, component: component)
+    
+      duplicate = build(:bike_component, bike: bike2, component: component)
       expect(duplicate).not_to be_valid
-      expect(duplicate.errors[:component_id]).to include("is already installed on this bike")
+      expect(duplicate.errors[:component_id]).to include("is already installed on a bike")
     end
   end
 end
