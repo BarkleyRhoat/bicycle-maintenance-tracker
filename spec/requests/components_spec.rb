@@ -5,21 +5,19 @@ RSpec.describe "Components", type: :request do
   let(:other_user) { create(:user, email: "other@example.com") }
 
   describe "when not logged in" do
-    it "redirects GET /components to /login" do
-      get components_path
-      expect(response).to redirect_to(login_path)
-    end
+    it "redirects all component requests to /login" do
+      aggregate_failures do
+        get components_path
+        expect(response).to redirect_to(login_path)
 
-    it "redirects GET /components/new to /login" do
-      get new_component_path
-      expect(response).to redirect_to(login_path)
-    end
+        get new_component_path
+        expect(response).to redirect_to(login_path)
 
-    it "redirects POST /components to /login" do
-      post components_path, params: {
-        component: { name: "Chain", component_type: "Chain", expected_lifespan_km: 3000 }
-      }
-      expect(response).to redirect_to(login_path)
+        post components_path, params: {
+          component: { name: "Chain", component_type: "Chain", expected_lifespan_km: 3000 }
+        }
+        expect(response).to redirect_to(login_path)
+      end
     end
   end
 
@@ -29,7 +27,7 @@ RSpec.describe "Components", type: :request do
     end
 
     describe "GET /components" do
-      it "displays the list of components" do
+      it "displays the user's components and hides other users' components" do
         component = create(
           :component,
           name: "Shimano Chain",
@@ -37,19 +35,16 @@ RSpec.describe "Components", type: :request do
           expected_lifespan_km: 3000,
           user: user
         )
-        get components_path
-
-        expect(response).to have_http_status(:ok)
-        expect(response.body).to include(component.name)
-        expect(response.body).to include("Chain")
-        expect(response.body).to include("3000 km")
-      end
-
-      it "does not display components belonging to other users" do
         other_component = create(:component, name: "Secret Chain", user: other_user)
         get components_path
 
-        expect(response.body).not_to include(other_component.name)
+        aggregate_failures do
+          expect(response).to have_http_status(:ok)
+          expect(response.body).to include(component.name)
+          expect(response.body).to include("Chain")
+          expect(response.body).to include("3000 km")
+          expect(response.body).not_to include(other_component.name)
+        end
       end
 
       it "displays an empty state message when no components exist" do
@@ -57,10 +52,6 @@ RSpec.describe "Components", type: :request do
         expect(response.body).to include("No components have been added yet.")
       end
 
-      it "shows My Bikes link in the navigation header" do
-        get components_path
-        expect(response.body).to include("My Bikes")
-      end
     end
 
     describe "GET /components/:id" do

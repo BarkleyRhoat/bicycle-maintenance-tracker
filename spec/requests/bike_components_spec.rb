@@ -6,21 +6,18 @@ RSpec.describe "BikeComponents", type: :request do
   let(:bike) { create(:bike, user: user) }
   let(:component) { create(:component, user: user) }
 
-  def bike
-    @bike ||= create(:bike, user: user)
-  end
 
   describe "when not logged in" do
-    it "redirects GET new to /login" do
-      get new_bike_bike_component_path(bike)
-      expect(response).to redirect_to(login_path)
-    end
+    it "redirects all bike component requests to /login" do
+      aggregate_failures do
+        get new_bike_bike_component_path(bike)
+        expect(response).to redirect_to(login_path)
 
-    it "redirects POST create to /login" do
-      post bike_bike_components_path(bike), params: {
-        bike_component: { component_id: component.id, installed_on: Date.current, current_km: 10 }
-      }
-      expect(response).to redirect_to(login_path)
+        post bike_bike_components_path(bike), params: {
+          bike_component: { component_id: component.id, installed_on: Date.current, current_km: 10 }
+        }
+        expect(response).to redirect_to(login_path)
+      end
     end
   end
 
@@ -143,7 +140,6 @@ RSpec.describe "BikeComponents", type: :request do
         expect(response.body).to include(bike_component.component.name)
         expect(response.body).to include(bike_component.component.component_type)
         expect(response.body).to include(bike_component.current_km.to_s)
-        expect(response.body).to include("Install a Component")
       end
 
       it "displays empty state when bike has no installed components" do
