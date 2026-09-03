@@ -7,7 +7,12 @@ class ComponentsController < ApplicationController
   end
 
   def show
-    @component = current_user.components.includes(maintenance_logs: :bike).find(params[:id])
+    @component = current_user.components.find(params[:id])
+    @component_bike_components = @component.bike_components.joins(:bike).where(bikes: { user_id: current_user.id })
+    @component_maintenance_logs = @component.maintenance_logs
+                                            .joins(:bike)
+                                            .where(bikes: { user_id: current_user.id })
+                                            .recent
   end
 
   def new

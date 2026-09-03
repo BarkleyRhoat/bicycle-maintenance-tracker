@@ -118,6 +118,36 @@ RSpec.describe "Components", type: :request do
 
         expect(response.body).to include("No maintenance logs for this component yet.")
       end
+
+      it "does not display bikes or maintenance logs belonging to other users" do
+        component = create(:component, user: user)
+        bike = create(:bike, name: "My Bike", user: user)
+        other_bike = create(:bike, name: "Other Bike", user: other_user)
+        create(:bike_component, bike: bike, component: component)
+
+        cross_user_install = BikeComponent.new(
+          bike: other_bike,
+          component: component,
+          installed_on: Date.current,
+          current_km: 100
+        )
+        cross_user_install.save(validate: false)
+
+        cross_user_log = MaintenanceLog.new(
+          bike: other_bike,
+          component: component,
+          service_date: Date.current,
+          description: "Other user service",
+          km_at_service: 100
+        )
+        cross_user_log.save(validate: false)
+
+        get component_path(component)
+
+        expect(response.body).to include(bike.name)
+        expect(response.body).not_to include(other_bike.name)
+        expect(response.body).not_to include(cross_user_log.description)
+      end
     end
 
     describe "POST /components" do
