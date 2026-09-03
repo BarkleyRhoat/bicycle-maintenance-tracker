@@ -64,11 +64,14 @@ RSpec.describe "BikeComponents", type: :request do
         expect(response.body).to include("error")
       end
 
-      it "prevents installing the same component twice on the bike" do
-        create(:bike_component, bike: bike, component: component)
-
+      it "prevents installing the same component on a second bike" do
+        bike1 = create(:bike, user: user)
+        bike2 = create(:bike, user: user)
+        component = create(:component, user: user)
+        create(:bike_component, bike: bike1, component: component)
+      
         expect do
-          post bike_bike_components_path(bike), params: {
+          post bike_bike_components_path(bike2), params: {
             bike_component: {
               component_id: component.id,
               installed_on: Date.current,
@@ -76,9 +79,9 @@ RSpec.describe "BikeComponents", type: :request do
             }
           }
         end.not_to change(BikeComponent, :count)
-
+      
         expect(response).to have_http_status(:unprocessable_content)
-        expect(response.body).to include("already installed on this bike")
+        expect(response.body).to include("is already installed on a bike")
       end
     end
 

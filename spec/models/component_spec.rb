@@ -2,15 +2,13 @@ require "rails_helper"
 
 RSpec.describe Component, type: :model do
   describe "associations" do
-    it "has many bikes through bike_components" do
+    it "has a bike through bike_components" do
       user = create(:user)
       component = create(:component, user: user)
-      bike1 = create(:bike, name: "Road Bike", user: user)
-      bike2 = create(:bike, name: "Gravel Bike", user: user)
-      create(:bike_component, bike: bike1, component: component)
-      create(:bike_component, bike: bike2, component: component)
-
-      expect(component.bikes).to include(bike1, bike2)
+      bike = create(:bike, user: user)
+      create(:bike_component, bike: bike, component: component)
+    
+      expect(component.bikes).to include(bike)
     end
 
     it "belongs to a user" do
