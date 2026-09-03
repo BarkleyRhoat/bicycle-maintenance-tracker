@@ -5,24 +5,20 @@ RSpec.describe "Bikes", type: :request do
   let(:other_user) { create(:user, email: "other@example.com") }
 
   describe "when not logged in" do
-    it "redirects GET / to /login" do
-      get root_path
-      expect(response).to redirect_to(login_path)
-    end
+    it "redirects all bike requests to /login" do
+      aggregate_failures do
+        get root_path
+        expect(response).to redirect_to(login_path)
 
-    it "redirects GET /bikes to /login" do
-      get bikes_path
-      expect(response).to redirect_to(login_path)
-    end
+        get bikes_path
+        expect(response).to redirect_to(login_path)
 
-    it "redirects GET /bikes/new to /login" do
-      get new_bike_path
-      expect(response).to redirect_to(login_path)
-    end
+        get new_bike_path
+        expect(response).to redirect_to(login_path)
 
-    it "redirects POST /bikes to /login" do
-      post bikes_path, params: { bike: { name: "Allez", brand: "Specialized" } }
-      expect(response).to redirect_to(login_path)
+        post bikes_path, params: { bike: { name: "Allez", brand: "Specialized" } }
+        expect(response).to redirect_to(login_path)
+      end
     end
   end
 
@@ -32,21 +28,18 @@ RSpec.describe "Bikes", type: :request do
     end
 
     describe "GET /bikes" do
-      it "displays the user's bikes and welcome message" do
+      it "displays the user's bikes and hides other users' bikes" do
         bike = create(:bike, user: user, name: "Tarmac SL7", brand: "Specialized")
-        get bikes_path
-
-        expect(response).to have_http_status(:ok)
-        expect(response.body).to include("Welcome, #{user.name}")
-        expect(response.body).to include(bike.name)
-        expect(response.body).to include(bike.brand)
-      end
-
-      it "does not display bikes belonging to other users" do
         other_bike = create(:bike, user: other_user, name: "Secret Bike", brand: "Trek")
         get bikes_path
 
-        expect(response.body).not_to include(other_bike.name)
+        aggregate_failures do
+          expect(response).to have_http_status(:ok)
+          expect(response.body).to include("Welcome, #{user.name}")
+          expect(response.body).to include(bike.name)
+          expect(response.body).to include(bike.brand)
+          expect(response.body).not_to include(other_bike.name)
+        end
       end
 
       it "displays an empty state message when user has no bikes" do
