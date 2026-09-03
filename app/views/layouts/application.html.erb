@@ -25,10 +25,10 @@
   <body>
     <header class="site-header">
       <div class="container">
-        <%= link_to root_path, class: "site-title" do %>
+        <div class: "site-title"> 
           <span aria-hidden="true">🚲</span>
           Bicycle Maintenance Tracker
-        <% end %>
+        </div>
 
         <nav class="site-nav">
           <% if logged_in? %>
