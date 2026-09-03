@@ -8,9 +8,9 @@
 
 <h2>Installed On Bikes</h2>
 
-<% if @component.bike_components.any? %>
+<% if @component_bike_components.any? %>
   <ul class="component-bikes-list">
-    <% @component.bike_components.each do |bike_component| %>
+    <% @component_bike_components.each do |bike_component| %>
       <li>
         <strong><%= link_to bike_component.bike.name, bike_path(bike_component.bike) %></strong>
         (<%= bike_component.bike.brand %>) | Installed on:
@@ -25,9 +25,9 @@
 
 <h2>Maintenance History</h2>
 
-<% if @component.maintenance_logs.any? %>
+<% if @component_maintenance_logs.any? %>
   <ul class="component-maintenance-logs-list">
-    <% @component.maintenance_logs.recent.each do |log| %>
+    <% @component_maintenance_logs.each do |log| %>
       <li>
         <strong><%= link_to log.service_date.strftime("%B %d, %Y"), bike_maintenance_log_path(log.bike, log) %></strong>
         | <%= log.description %> | KM at service: <%= log.km_at_service %>
